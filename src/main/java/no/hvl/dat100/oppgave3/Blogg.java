@@ -4,47 +4,73 @@ import no.hvl.dat100.common.TODO;
 import no.hvl.dat100.oppgave1.*;
 
 public class Blogg {
+	
+	private Innlegg[] innleggTabell;
+	private int nesteLedige;
 
-	// TODO: objektvariable 
+	
 
 	public Blogg() {
-		throw new UnsupportedOperationException(TODO.constructor("Blogg"));
+		this.innleggTabell = new Innlegg[20];
+		this.nesteLedige = 0;
 	}
 
 	public Blogg(int lengde) {
-		throw new UnsupportedOperationException(TODO.constructor("Blogg"));
+		this.innleggTabell = new Innlegg[lengde];
+		this.nesteLedige = 0;
 	}
 
 	public int getAntall() {
-		throw new UnsupportedOperationException(TODO.method());
+		return nesteLedige;
 	}
 	
 	public Innlegg[] getSamling() {
-		throw new UnsupportedOperationException(TODO.method());
+		return innleggTabell;
 
 	}
 	
 	public int finnInnlegg(Innlegg innlegg) {
-
-		throw new UnsupportedOperationException(TODO.method());
+		boolean funnet = false; 
+		int pos = 0;
+		while (pos<nesteLedige && !funnet) {
+			if (innleggTabell[pos].erLik(innlegg)) {
+				funnet = true;
+			}else {
+				pos++;
+		}
+		}
+			if (funnet) {
+				return pos;
+			}else {
+				return -1;
+			}
 	}
 
 	public boolean finnes(Innlegg innlegg) {
-		throw new UnsupportedOperationException(TODO.method());
+		return finnInnlegg(innlegg) != -1;
 	}
 
 	public boolean ledigPlass() {
-		throw new UnsupportedOperationException(TODO.method());
-
-	}
-	
+		return nesteLedige < innleggTabell.length;
+		}
+		
 	public boolean leggTil(Innlegg innlegg) {
-
-		throw new UnsupportedOperationException(TODO.method());
+		 if (!finnes(innlegg) && ledigPlass()) {
+	            innleggTabell[nesteLedige] = innlegg;
+	            nesteLedige++;
+	            return true;
+	        }
+	        return false;
 	}
 	
 	public String toString() {
-		throw new UnsupportedOperationException(TODO.method());
+		 StringBuilder sb = new StringBuilder();
+	        sb.append(nesteLedige).append("\n"); // Første linje viser antall innlegg
+
+	        for (int i = 0; i < nesteLedige; i++) {
+	            sb.append(innleggTabell[i].toString());
+	        }
+	        return sb.toString();
 	}
 
 	// valgfrie oppgaver nedenfor
